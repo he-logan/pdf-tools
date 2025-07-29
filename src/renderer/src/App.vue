@@ -1,14 +1,12 @@
 <script setup lang="ts">
-// import layOut from '@renderer/layout/index.vue'
+import layOut from '@renderer/layout/index.vue'
 import '@renderer/css/index.css'
 </script>
 <template>
   <div class="main">
-    <!-- <div class="left">
+    <div class="top">
       <layOut></layOut>
     </div>
-    <div>
-    </div> -->
     <router-view />
   </div>
 </template>

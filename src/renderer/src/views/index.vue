@@ -1,22 +1,27 @@
 <template>
   <div class="views-pdf">
-    <el-upload
-      v-model:file-list="fileList"
-      class="upload-demo"
-      action="#"
-      :auto-upload="false"
-      multiple
-      :on-remove="handleRemove"
-      :on-change="handleChange"
-      :limit="1"
-      :on-exceed="handleExceed"
-      accept=".pdf"
-    >
-      <el-button type="primary">选择文件</el-button>
-      <!-- <template #tip>
-        <div class="el-upload__tip">只能选择PDF文件</div>
-      </template> -->
-    </el-upload>
+    <div class="upload">
+      <el-upload
+        v-model:file-list="fileList"
+        class="upload-demo"
+        drag
+        action="#"
+        :auto-upload="false"
+        :on-remove="handleRemove"
+        :on-change="handleChange"
+        :limit="1"
+        :on-exceed="handleExceed"
+        accept=".pdf"
+        multiple
+      >
+        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+        <template #tip>
+          <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+        </template>
+      </el-upload>
+    </div>
+    <div class="list">列表</div>
     <!-- <input id="pdfInput" type="file" accept=".pdf" /> -->
     <!-- <button id="splitButton" @click="handleSplit">拆分 PDF</button> -->
   </div>
