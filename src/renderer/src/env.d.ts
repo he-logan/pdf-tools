@@ -6,3 +6,11 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare global {
+  interface Window {
+    api: {
+      saveSplitFiles: (files: Array<{ name: string; bytes: Uint8Array }>) => Promise<{ canceled: boolean; directory?: string }>
+    }
+  }
+}

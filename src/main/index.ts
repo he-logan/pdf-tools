@@ -1,4 +1,5 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
+import { writeFileSync } from 'fs'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -51,6 +52,25 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  ipcMain.handle('save-split-files', async (_, files: Array<{ name: string; bytes: Uint8Array }>) => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      title: '选择输出文件夹',
+      properties: ['openDirectory', 'createDirectory'],
+    })
+
+    if (canceled || filePaths.length === 0) {
+      return { canceled: true }
+    }
+
+    const outputDir = filePaths[0]
+    for (const file of files) {
+      const targetPath = join(outputDir, file.name)
+      writeFileSync(targetPath, Buffer.from(file.bytes))
+    }
+
+    return { canceled: false, directory: outputDir }
+  })
 
   createWindow()
 
